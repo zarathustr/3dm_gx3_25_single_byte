@@ -44,6 +44,7 @@
   <buildtool_depend>roscpp</buildtool_depend>
   <buildtool_depend>sensor_msgs</buildtool_depend>
   <buildtool_depend>tf</buildtool_depend>
+  <buildtool_depend>cmake_modules</buildtool_depend>
 
   <run_depend>catkin</run_depend>
   <run_depend>roscpp</run_depend>
