@@ -6,6 +6,11 @@ project(imu_3dm_gx3)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED roscpp sensor_msgs tf cmake_modules)
 
+find_package(catkin REQUIRED COMPONENTS)
+
+
+include_directories(${catkin_INCLUDE_DIRS})
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 find_package(Eigen REQUIRED)
