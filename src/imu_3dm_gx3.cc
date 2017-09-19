@@ -1,5 +1,8 @@
 // Interface to the Microstrain 3DM-GX3-25
 // N. Michael
+// y = -y
+// x = -z
+// z = -x
 
 #include <deque>
 #include <ros/ros.h>
@@ -107,7 +110,7 @@ int main(int argc, char** argv)
   n.param("baud", baud, 115200);
 
   string frame_id;
-  n.param("frame_id", frame_id, string("imu"));
+  n.param("frame_id", frame_id, string("world"));
 
   double delay;
   n.param("delay", delay, 0.0);
@@ -262,12 +265,12 @@ int main(int argc, char** argv)
 
       msg.header.stamp    = t0 + ros::Duration(T) - ros::Duration(delay);
       msg.header.frame_id = frame_id;
-      msg.angular_velocity.x = ang_vel[0];
-      msg.angular_velocity.y = ang_vel[1];
-      msg.angular_velocity.z = ang_vel[2];
-      msg.linear_acceleration.x = acc[0] * 9.81;
-      msg.linear_acceleration.y = acc[1] * 9.81;
-      msg.linear_acceleration.z = acc[2] * 9.81;
+      msg.angular_velocity.x = -ang_vel[2];
+      msg.angular_velocity.y = -ang_vel[1];
+      msg.angular_velocity.z = -ang_vel[0];
+      msg.linear_acceleration.x = -acc[2] * 9.81;
+      msg.linear_acceleration.y = -acc[1] * 9.81;
+      msg.linear_acceleration.z = -acc[0] * 9.81;
       // mat R(3,3);
       // for (unsigned int i = 0; i < 3; i++)
       //   for (unsigned int j = 0; j < 3; j++)
@@ -282,9 +285,9 @@ int main(int argc, char** argv)
       msg.orientation.x = (double)q.x();// q(1);
       msg.orientation.y = (double)q.y();// q(2);
       msg.orientation.z = (double)q.z();// q(3);
-      msg_mag.magnetic_field.x = mag[0];
-      msg_mag.magnetic_field.y = mag[1];
-      msg_mag.magnetic_field.z = mag[2];
+      msg_mag.magnetic_field.x = -mag[2];
+      msg_mag.magnetic_field.y = -mag[1];
+      msg_mag.magnetic_field.z = -mag[0];
       msg_mag.header.stamp=msg.header.stamp;
       msg_mag.header.frame_id=msg.header.frame_id;
       pub.publish(msg);
